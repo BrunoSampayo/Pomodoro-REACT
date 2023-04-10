@@ -17,6 +17,9 @@ display: flex;
 justify-content: center;
 gap: 28px;
 margin: 15px 0;
+@media  (max-width:1366px)  {
+  margin: 5px 0;
+}
 
 
 .stage{
@@ -40,6 +43,14 @@ background-image: url(${tomato});
 background-position: bottom ;
 background-size: 600px;
 background-repeat: no-repeat;
+
+@media  (max-width:1366px)  {
+    background-color: #ccc;
+    height: 410px;
+    overflow: hidden;
+    background-size: 430px;
+    
+}
 
 
 
@@ -73,5 +84,13 @@ button:hover{
     color: #fff;
     border: 1px solid #ccc;
     scale: 1.1;
+}
+
+@media  (max-width:1366px)  {
+ 
+button{
+    width: 100px;
+    height: 40px;
+}
 }
 `

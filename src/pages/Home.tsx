@@ -1,9 +1,10 @@
 import * as C from './HomeStyles'
-import {useState , useEffect} from 'react';
+import {useState , useEffect, } from 'react';
 export const Home = () =>{
 
     const [currentTime, setCurrentTime] =  useState('')
     const [time, setTime] = useState(1499);
+    const [intervalI , setIntervalI] = useState<any>(null)
     
     
     const FormatClock = (time:number)=>{
@@ -23,11 +24,18 @@ export const Home = () =>{
          const interval = setInterval(()=>{
             setTime(timer => timer-1)
         },1000)
-
+        setIntervalI(interval)
         return ()=>{clearInterval(interval);}
     }
-    const stop = () =>{}
-    const restar = () =>{}
+    const stop = () =>{
+        clearInterval(intervalI)
+        setIntervalI(null)
+    }
+    const restart = () =>{
+        clearInterval(intervalI);
+        setIntervalI(null);
+        setTime(1499)
+    }
 
     return(
         <C.Container>
@@ -42,8 +50,8 @@ export const Home = () =>{
             </C.PomodoroContainer>
             <C.Controls>
                 <button onClick={()=>start()}>Start</button>
-                <button>Stop</button>
-                <button>Restart</button>
+                <button onClick={()=>stop()}>Stop</button>
+                <button onClick={()=>restart()}>Restart</button>
                 </C.Controls>
 
 

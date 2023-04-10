@@ -56,6 +56,11 @@ font-family:'Lilita One', cursive ;
 font-size: 20px;
 padding: 12px;
 
+@media  (max-width:1366px)  {
+ 
+    height: 28px;
+ }
+
 .left{
 
 }
