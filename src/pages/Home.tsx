@@ -1,10 +1,16 @@
+type StateType  = ('Study' | 'Relax' )
+
+
 import * as C from './HomeStyles'
 import {useState , useEffect, } from 'react';
 export const Home = () =>{
 
     const [currentTime, setCurrentTime] =  useState('')
-    const [time, setTime] = useState(1499);
+    const [userTime, setUserTime] = useState(500)
+    const [time, setTime] = useState(userTime);
     const [intervalI , setIntervalI] = useState<any>(null)
+    const [stage, setStage] = useState<StateType>('Study');
+    const [cicle, setCicle] = useState(1)
     
     
     const FormatClock = (time:number)=>{
@@ -13,19 +19,32 @@ export const Home = () =>{
         setCurrentTime(`${minutes.toString().padStart(2,'0')}:${resSeconds.toString().padStart(2,'0')}`)
     }
    
-    useEffect(()=>{
-       
-    },[])
+  
     useEffect(()=>{
         FormatClock(time);
+        if(time <= 0 ){
+             stop()
+             changeStage()
+             if(cicle === 9 ){
+                restart()
+             }
+             
+        }
+
+
     },[time])
 
     const start = ()=>{
-         const interval = setInterval(()=>{
-            setTime(timer => timer-1)
-        },1000)
-        setIntervalI(interval)
-        return ()=>{clearInterval(interval);}
+        if(intervalI == null){
+           
+            const interval = setInterval(()=>{
+                setTime(timer => timer-1);
+            },10)
+            setIntervalI(interval)
+            return ()=>{clearInterval(interval);}
+        }
+        return
+         
     }
     const stop = () =>{
         clearInterval(intervalI)
@@ -34,7 +53,48 @@ export const Home = () =>{
     const restart = () =>{
         clearInterval(intervalI);
         setIntervalI(null);
-        setTime(1499)
+        setTime(userTime)
+        setCicle(1)
+    }
+
+    const changeStage = () =>{
+       changeCicle()
+        if(cicle < 9){
+            if(stage === "Study"){
+                
+                setStage('Relax')
+                if(cicle === 8){
+                   setTime(userTime/3)
+                   console.log("relaxxx")
+                }else{
+                    setTime(userTime / 5)
+                }
+                
+                
+                
+               
+
+             }   else if(stage ==="Relax"){
+                
+                setStage('Study')
+                setTime(userTime)
+                
+                
+             }
+        }
+        
+    }
+
+    const changeCicle = ()=>{
+        
+        setCicle(cicle=>cicle+1)
+        console.log(cicle)
+        
+        
+        //1 bolinha vermelha
+        //2 bolinha piscando verde, findando time fica verde pula proxima
+        //3 ...
+
     }
 
     return(
