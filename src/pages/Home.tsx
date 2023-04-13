@@ -7,7 +7,7 @@ export const Home = () =>{
 
     const [currentTime, setCurrentTime] =  useState('')
     const [userTime, setUserTime] = useState(500)
-    const [time, setTime] = useState(userTime);
+    const [time, setTime] = useState<number>(userTime);
     const [intervalI , setIntervalI] = useState<any>(null)
     const [stage, setStage] = useState<StateType>('Study');
     const [cicle, setCicle] = useState(1)
@@ -34,6 +34,11 @@ export const Home = () =>{
 
     },[time])
 
+    useEffect(()=>{
+        setCicle(cicle+1)
+        
+    },[stage])
+
     const start = ()=>{
         if(intervalI == null){
            
@@ -58,44 +63,31 @@ export const Home = () =>{
     }
 
     const changeStage = () =>{
-       changeCicle()
+       
         if(cicle < 9){
             if(stage === "Study"){
                 
                 setStage('Relax')
+                
                 if(cicle === 8){
-                   setTime(userTime/3)
-                   console.log("relaxxx")
+                    
+                   setTime(Math.round(userTime/3))
+                   
                 }else{
                     setTime(userTime / 5)
                 }
                 
-                
-                
-               
-
-             }   else if(stage ==="Relax"){
-                
+             }   
+             else if(stage ==="Relax"){
                 setStage('Study')
                 setTime(userTime)
-                
-                
+
              }
         }
         
     }
 
-    const changeCicle = ()=>{
-        
-        setCicle(cicle=>cicle+1)
-        console.log(cicle)
-        
-        
-        //1 bolinha vermelha
-        //2 bolinha piscando verde, findando time fica verde pula proxima
-        //3 ...
-
-    }
+    
 
     return(
         <C.Container>
